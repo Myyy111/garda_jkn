@@ -43,8 +43,11 @@ class MemberRepository extends BaseRepository
 
     public function countByMonth(int $limit = 6): array
     {
-        return $this->model->selectRaw("TO_CHAR(created_at, 'Mon YYYY') as month, count(*) as total, MIN(created_at) as sort_date")
-            ->groupBy(\DB::raw("TO_CHAR(created_at, 'Mon YYYY')"))
+        $driver = \DB::getDriverName();
+        $format = $driver === 'pgsql' ? "TO_CHAR(created_at, 'Mon YYYY')" : "DATE_FORMAT(created_at, '%b %Y')";
+
+        return $this->model->selectRaw("$format as month, count(*) as total, MIN(created_at) as sort_date")
+            ->groupBy(\DB::raw($format))
             ->orderBy('sort_date', 'DESC')
             ->limit($limit)
             ->get()

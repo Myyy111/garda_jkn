@@ -22,15 +22,6 @@ return new class extends Migration
             $table->foreignId('city_id')->constrained('cities');
             $table->foreignId('district_id')->constrained('districts');
             $table->timestamps();
-
-            // Indexes for optimize
-            $table->index('created_at');
-            $table->index('gender');
-            $table->index('education');
-            $table->index('occupation');
-            $table->index('province_id');
-            $table->index('city_id');
-            $table->index('district_id');
         });
     }
 

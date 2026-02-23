@@ -17,6 +17,9 @@ return new class extends Migration
             $table->index('gender');
             $table->index('education');
             $table->index('occupation');
+            $table->index('province_id');
+            $table->index('city_id');
+            $table->index('district_id');
 
             // NFR: Filter Wilayah
             $table->index(['province_id', 'city_id', 'district_id'], 'idx_location');
@@ -33,6 +36,9 @@ return new class extends Migration
             $table->dropIndex(['gender']);
             $table->dropIndex(['education']);
             $table->dropIndex(['occupation']);
+            $table->dropIndex(['province_id']);
+            $table->dropIndex(['city_id']);
+            $table->dropIndex(['district_id']);
             $table->dropIndex('idx_location');
         });
     }

@@ -5,30 +5,30 @@ Sistem ini dibangun menggunakan Laravel 12 dengan standar Enterprise Architectur
 ## Prasyarat
 - PHP 8.3+
 - Composer
-- PostgreSQL 14+
+- MySQL 8.0+ / MariaDB
 
 ## Langkah Instalasi Database
 
-Karena konfigurasi `.env` sudah diset untuk PostgreSQL (`DB_CONNECTION=pgsql`), ikuti langkah ini:
+Sistem ini sekarang dikonfigurasi menggunakan **MySQL**. Ikuti langkah ini:
 
-1.  **Pastikan PostgreSQL Berjalan**
-    Buka pgAdmin atau terminal psql Anda.
+1.  **Pastikan MySQL Berjalan**
+    Buka phpMyAdmin, HeidiSQL, atau terminal MySQL Anda.
 
 2.  **Buat Database**
-    Jalankan perintah SQL berikut di pgAdmin/psql:
+    Jalankan perintah SQL berikut:
     ```sql
     CREATE DATABASE sistem_garda_jkn;
     ```
 
 3.  **Konfigurasi Akun**
-    Pastikan file `.env` sesuai dengan kredensial PostgreSQL Anda:
+    Pastikan file `.env` sesuai dengan kredensial MySQL Anda (biasanya root tanpa password di lokal):
     ```env
-    DB_CONNECTION=pgsql
+    DB_CONNECTION=mysql
     DB_HOST=127.0.0.1
-    DB_PORT=5432
+    DB_PORT=3306
     DB_DATABASE=sistem_garda_jkn
-    DB_USERNAME=postgres  <-- Ganti jika beda
-    DB_PASSWORD=          <-- Isi password postgres Anda
+    DB_USERNAME=root
+    DB_PASSWORD=
     ```
 
 4.  **Jalankan Migrasi & Seeding**
