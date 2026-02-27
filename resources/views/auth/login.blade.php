@@ -56,7 +56,7 @@
         gap: 8px;
         background: #f1f5f9;
         padding: 4px;
-        border-radius: 10px;
+        border-radius: var(--radius-md);
         margin-bottom: 24px;
     }
     .role-nav button {
@@ -66,7 +66,7 @@
         background: none;
         font-size: 0.875rem;
         font-weight: 600;
-        border-radius: 8px;
+        border-radius: calc(var(--radius-md) - 4px);
         cursor: pointer;
         transition: 0.2s;
         color: var(--text-muted);
@@ -114,7 +114,7 @@
 
             <div class="role-nav">
                 <button id="btn-member" class="active" onclick="switchRole('member')">Anggota</button>
-                <button id="btn-admin" onclick="switchRole('admin')">Admin</button>
+                <button id="btn-pengurus" onclick="switchRole('pengurus')">Pengurus</button>
             </div>
 
             <form id="loginForm">
@@ -125,7 +125,14 @@
                 
                 <div class="input-group">
                     <label class="label">Kata Sandi</label>
-                    <input type="password" id="password" class="form-input" placeholder="Masukkan password" required>
+                    <div class="input-group-password">
+                        <input type="password" id="password" class="form-input" placeholder="Masukkan password" required>
+                        <button type="button" class="password-toggle-btn" onclick="togglePassword('password')" tabindex="-1">
+                            <span id="icon-password" style="display: flex;">
+                                <i data-lucide="eye" style="width: 18px; height: 18px; color: #64748b;"></i>
+                            </span>
+                        </button>
+                    </div>
                 </div>
 
                 <div style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center;">
@@ -160,45 +167,53 @@
     function switchRole(newRole) {
         role = newRole;
         document.getElementById('btn-member').classList.toggle('active', role === 'member');
-        document.getElementById('btn-admin').classList.toggle('active', role === 'admin');
+        document.getElementById('btn-pengurus').classList.toggle('active', role === 'pengurus');
         
         const label = document.getElementById('identityLabel');
-        const input = document.getElementById('identity');
-        
-        if(role === 'member') {
-            label.innerText = 'NIK Anggota (16 Digit)';
-            input.placeholder = 'Contoh: 3171************';
-        } else {
-            label.innerText = 'Username Admin';
-            input.placeholder = 'Masukkan username';
-        }
+        label.innerText = (role === 'member') ? 'NIK Anggota (16 Digit)' : 'NIK Pengurus (16 Digit)';
     }
 
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
         e.preventDefault();
-        const payload = { password: document.getElementById('password').value };
-        let endpoint = '';
-
-        if(role === 'member') {
-            payload.nik = document.getElementById('identity').value;
-            endpoint = 'member/login';
-        } else {
-            payload.username = document.getElementById('identity').value;
-            endpoint = 'admin/login';
-        }
+        const payload = { 
+            nik: document.getElementById('identity').value,
+            password: document.getElementById('password').value 
+        };
 
         try {
-            const res = await axios.post(endpoint, payload);
+            const res = await axios.post('member/login', payload);
             if(res.data.success) {
+                const userData = res.data.data;
+                const memberRole = userData.member.role; // 'anggota' atau 'pengurus'
+
+                // Logika Pembatasan Hak Akses:
+                // 1. Jika login sebagai 'pengurus' tapi NIK hanya punya role 'anggota' -> TOLAK
+                if (role === 'pengurus' && memberRole !== 'pengurus') {
+                    showToast('Maaf, NIK Anda belum terdaftar sebagai Pengurus JKN.', 'error');
+                    return;
+                }
+
+                // Jika lolos, simpan token dan role login yang dipilih
+                localStorage.setItem('auth_token', userData.token);
+                localStorage.setItem('user_role', (role === 'pengurus') ? 'pengurus' : 'member');
+                localStorage.setItem('user_name', userData.member.name);
+                
                 showToast('Login berhasil, mengalihkan...', 'success');
-                localStorage.setItem('auth_token', res.data.data.token);
-                localStorage.setItem('user_role', role);
+                
                 setTimeout(() => {
-                    window.location.href = (role === 'admin') ? '/admin/dashboard' : '/member/profile';
+                    if (role === 'pengurus') {
+                        window.location.href = '/pengurus/dashboard';
+                    } else {
+                        window.location.href = '/member/profile';
+                    }
                 }, 1000);
             }
         } catch (error) {
-            showToast(error.response?.data?.message || 'Identitas atau password salah.', 'error');
+            let errorMsg = 'Identitas atau password salah.';
+            if (error.response?.data?.message) {
+                errorMsg = error.response.data.message;
+            }
+            showToast(errorMsg, 'error');
         }
     });
 </script>

@@ -16,6 +16,7 @@ class UpdateProfileRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'phone' => ['required', 'string', 'regex:/^(\+62|08)[0-9]{8,15}$/'],
+            'birth_date' => 'required|date',
             'gender' => 'required|in:L,P',
             'education' => 'required|in:SD,SMP,SMA,Diploma,S1/D4,S2',
             'occupation' => 'required|in:Petani,Pedagang,Nelayan,Wiraswasta,Karyawan,PNS,TNI/POLRI,Lainnya',
@@ -43,6 +44,17 @@ class UpdateProfileRequest extends FormRequest
                 }
             ],
             'photo' => 'nullable|image|mimes:jpg,jpeg,png|max:10240',
+            
+            // Pengurus Application Fields
+            'is_interested_pengurus' => 'nullable|boolean',
+            'has_org_experience' => 'nullable|boolean',
+            'org_count' => 'nullable|integer',
+            'org_name' => 'nullable|string|max:255',
+            'org_position' => 'nullable|string|max:255',
+            'org_duration_months' => 'nullable|integer',
+            'org_description' => 'nullable|string',
+            'pengurus_reason' => 'nullable|string',
+            'status_pengurus' => 'nullable|string'
         ];
     }
 }

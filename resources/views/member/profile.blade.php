@@ -54,6 +54,9 @@
                     </div>
                 </div>
                 <div style="display: flex; gap: 8px;">
+                    <a href="/settings" class="btn" style="padding: 8px 16px; background: #f1f5f9; border: 1px solid #e2e8f0; color: #475569; text-decoration: none; display: flex; align-items: center; gap: 8px;">
+                        <i data-lucide="settings" style="width: 16px; height: 16px;"></i> Pengaturan
+                    </a>
                     <button class="btn btn-primary" onclick="openEditModal()" style="padding: 8px 16px; background: #004aad; border: none; color: white;">Edit Profil</button>
                     <button class="btn btn-secondary" onclick="logout()" style="padding: 8px 16px; background: white; border: 1px solid #e2e8f0; color: #64748b;">Keluar Sesi</button>
                 </div>
@@ -68,6 +71,11 @@
                     <div class="data-row" style="margin-bottom: 20px;">
                         <div class="data-label">WhatsApp</div>
                         <div class="data-value" id="phoneDisplay">...</div>
+                    </div>
+                    
+                    <div class="data-row" style="margin-bottom: 20px;">
+                        <div class="data-label">Tanggal Lahir</div>
+                        <div class="data-value" id="birthDateDisplay">...</div>
                     </div>
                     
                     <div class="data-row">
@@ -107,6 +115,87 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Pengurus Application Section -->
+            <div id="pengurus-section" style="margin-top: 32px; padding: 24px; background: #eff6ff; border: 1px dashed #3b82f6; border-radius: 12px; display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h3 style="font-size: 1rem; font-weight: 700; color: #1e3a8a; margin-bottom: 4px;">Pendaftaran Pengurus</h3>
+                        <p style="font-size: 0.8125rem; color: #1e40af; opacity: 0.8;">Bantu kembangkan Garda JKN dengan menjadi bagian dari kepengurusan kami.</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="openPengurusModal()" style="background: #1e3a8a; border: none; padding: 10px 20px;">Daftar Sekarang</button>
+                </div>
+            </div>
+
+            <div id="pengurus-status-section" style="margin-top: 32px; padding: 24px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; display: none;">
+                <h3 style="font-size: 0.875rem; font-weight: 700; color: #1e293b; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                    <i data-lucide="shield-check" style="width: 18px; height: 18px; color: #1e3a8a;"></i> Informasi Kepengurusan
+                </h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div>
+                        <div class="data-label">Status Pendaftaran</div>
+                        <div id="statusPengurusBadge" style="margin-top: 6px;"></div>
+                    </div>
+                    <div>
+                        <div class="data-label">Perolehan Peran</div>
+                        <div class="data-value" id="memberRoleDisplay">Anggota Biasa</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Pendaftaran Pengurus -->
+<div id="pengurusModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15,23,42,0.6); z-index:1001; align-items:center; justify-content:center; backdrop-filter: blur(4px);">
+    <div style="background: white; width:500px; padding:0; border-radius: 12px; overflow:hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);">
+        <div style="padding:20px 24px; border-bottom:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
+            <h3 style="font-size:1rem; font-weight:700; color:#1e293b; margin:0;">Formulir Calon Pengurus</h3>
+            <button onclick="closePengurusModal()" style="background:none; border:none; color:#64748b; font-size:1.25rem; cursor:pointer;">&times;</button>
+        </div>
+        
+        <div id="pengurusStep1" style="padding:32px; text-align:center;">
+            <div style="width:64px; height:64px; background:#eff6ff; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 20px;">
+                <i data-lucide="help-circle" style="width:32px; height:32px; color:#3b82f6;"></i>
+            </div>
+            <h4 style="font-size:1.125rem; font-weight:700; color:#1e293b; margin-bottom:12px;">Ingin Jadi Pengurus?</h4>
+            <p style="color:#64748b; font-size:0.875rem; margin-bottom:24px;">Apakah anda bersedia berkontribusi lebih sebagai pengurus di Garda JKN?</p>
+            <div style="display:flex; gap:12px;">
+                <button class="btn btn-secondary" onclick="submitPengurusInterest(false)" style="flex:1; padding:12px;">Tidak Sekarang</button>
+                <button class="btn btn-primary" onclick="showPengurusStep(2)" style="flex:1; padding:12px; background:#004aad; border:none;">Ya, Saya Ingin</button>
+            </div>
+        </div>
+
+        <div id="pengurusStep2" style="padding:32px; text-align:center; display:none;">
+            <div style="width:64px; height:64px; background:#f0fdf4; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 20px;">
+                <i data-lucide="users" style="width:32px; height:32px; color:#22c55e;"></i>
+            </div>
+            <h4 style="font-size:1.125rem; font-weight:700; color:#1e293b; margin-bottom:12px;">Pengalaman Organisasi</h4>
+            <p style="color:#64748b; font-size:0.875rem; margin-bottom:24px;">Apakah anda pernah memiliki pengalaman berorganisasi sebelumnya?</p>
+            <div style="display:flex; gap:12px;">
+                <button class="btn btn-secondary" onclick="submitPengurusInterest(true, false)" style="flex:1; padding:12px;">Tidak Ada</button>
+                <button class="btn btn-primary" onclick="showPengurusStep(3)" style="flex:1; padding:12px; background:#004aad; border:none;">Ya, Ada</button>
+            </div>
+        </div>
+
+        <div id="pengurusStep3" style="padding:32px; display:none;">
+            <h4 style="font-size:1rem; font-weight:700; color:#1e293b; margin-bottom:20px;">Detail Pengalaman & Motivasi</h4>
+            <div style="margin-bottom:16px;">
+                <label class="label" style="font-size:0.75rem;">Berapa Organisasi yang Pernah Diikuti?</label>
+                <input type="number" id="appOrgCount" class="form-input" placeholder="Contoh: 3" style="width:100%; margin-top:4px;">
+            </div>
+            <div style="margin-bottom:16px;">
+                <label class="label" style="font-size:0.75rem;">Apa Saja Organisasi Tersebut?</label>
+                <textarea id="appOrgName" class="form-input" rows="3" placeholder="Sebutkan nama-nama organisasi..." style="width:100%; margin-top:4px; resize:none;"></textarea>
+            </div>
+            <div style="margin-bottom:24px;">
+                <label class="label" style="font-size:0.75rem;">Alasan Ingin Menjadi Pengurus?</label>
+                <textarea id="appReason" class="form-input" rows="3" placeholder="Tuliskan motivasi anda..." style="width:100%; margin-top:4px; resize:none;"></textarea>
+            </div>
+            <div style="display:flex; gap:12px;">
+                <button class="btn btn-secondary" onclick="showPengurusStep(2)" style="flex:1; padding:12px;">Kembali</button>
+                <button class="btn btn-primary" onclick="submitPengurusInterest(true, true)" style="flex:2; padding:12px; background:#004aad; border:none;">Kirim Pendaftaran</button>
+            </div>
         </div>
     </div>
 </div>
@@ -129,14 +218,18 @@
                     </div>
                 </div>
             </div>
+            <div style="margin-bottom: 20px;">
+                <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">Nama Lengkap</label>
+                <input type="text" id="editName" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 0.875rem;">
+            </div>
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-bottom:20px;">
-                <div>
-                    <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">Nama Lengkap</label>
-                    <input type="text" id="editName" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 0.875rem;">
-                </div>
                 <div>
                     <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">No. WhatsApp</label>
                     <input type="text" id="editPhone" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 0.875rem;">
+                </div>
+                <div>
+                    <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">Tanggal Lahir</label>
+                    <input type="date" id="editBirthDate" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 0.875rem;">
                 </div>
             </div>
 
@@ -237,6 +330,7 @@
         document.getElementById('nameDisplay').innerText = d.name;
         document.getElementById('nikDisplay').innerText = `NIK: ${d.nik}`;
         document.getElementById('phoneDisplay').innerText = d.phone;
+        document.getElementById('birthDateDisplay').innerText = d.birth_date ? d.birth_date : '-';
         document.getElementById('genderDisplay').innerText = d.gender === 'L' ? 'Laki-laki' : 'Perempuan';
         document.getElementById('educationDisplay').innerText = d.education;
         document.getElementById('occupationDisplay').innerText = d.occupation;
@@ -250,6 +344,94 @@
             const initials = d.name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
             document.getElementById('avatarContainer').innerHTML = `<span style="font-weight: 700; color: #64748b; font-size: 1.5rem;">${initials}</span>`;
         }
+
+        // Pengurus Logic
+        const pSection = document.getElementById('pengurus-section');
+        const psSection = document.getElementById('pengurus-status-section');
+        const statusBadge = document.getElementById('statusPengurusBadge');
+        const roleDisplay = document.getElementById('memberRoleDisplay');
+
+        if (d.status_pengurus === 'tidak_mendaftar') {
+            pSection.style.display = 'block';
+            psSection.style.display = 'none';
+        } else {
+            pSection.style.display = 'none';
+            psSection.style.display = 'block';
+            roleDisplay.innerText = d.role === 'pengurus' ? 'Pengurus Garda JKN' : 'Anggota Biasa';
+            
+            let badgeHtml = '';
+            if (d.status_pengurus === 'pendaftaran_diterima') {
+                badgeHtml = '<span class="status-badge" style="background:#fef3c7; color:#92400e; border:1px solid #fde68a;">Menunggu Verifikasi</span>';
+            } else if (d.status_pengurus === 'aktif') {
+                badgeHtml = '<span class="status-badge" style="background:#ecfdf5; color:#065f46; border:1px solid #d1fae5;">Kepengurusan Aktif</span>';
+            } else {
+                badgeHtml = `<span class="status-badge">${d.status_pengurus}</span>`;
+            }
+            statusBadge.innerHTML = badgeHtml;
+        }
+    }
+
+    // --- Pengurus Modal Logic ---
+    function openPengurusModal() {
+        showPengurusStep(1);
+        document.getElementById('pengurusModal').style.display = 'flex';
+    }
+
+    function closePengurusModal() {
+        document.getElementById('pengurusModal').style.display = 'none';
+    }
+
+    function showPengurusStep(step) {
+        document.getElementById('pengurusStep1').style.display = step === 1 ? 'block' : 'none';
+        document.getElementById('pengurusStep2').style.display = step === 2 ? 'block' : 'none';
+        document.getElementById('pengurusStep3').style.display = step === 3 ? 'block' : 'none';
+    }
+
+    async function submitPengurusInterest(interested, hasOrg = false) {
+        const btn = event?.currentTarget;
+        const originalText = btn ? btn.innerText : 'Kirim';
+        
+        const payload = {
+            is_interested_pengurus: interested,
+            has_org_experience: hasOrg
+        };
+
+        if (interested && hasOrg) {
+            payload.org_count = document.getElementById('appOrgCount').value;
+            payload.org_name = document.getElementById('appOrgName').value;
+            payload.pengurus_reason = document.getElementById('appReason').value;
+
+            if (!payload.org_count || !payload.org_name || !payload.pengurus_reason) {
+                showToast('Mohon lengkapi semua data pendaftaran.', 'warning');
+                return;
+            }
+        }
+
+        if (btn) {
+            btn.disabled = true;
+            btn.innerText = 'Mengirim...';
+        }
+
+        try {
+            await axios.post('member/apply-pengurus', payload);
+            showToast('Data kepengurusan berhasil disimpan!', 'success');
+            closePengurusModal();
+            fetchProfile(); // Refresh UI
+        } catch (e) {
+            console.error(e);
+            let msg = 'Gagal menyimpan data.';
+            if (e.response?.data?.errors) {
+                msg = Object.values(e.response.data.errors).flat().join(' ');
+            } else if (e.response?.data?.message) {
+                msg = e.response.data.message;
+            }
+            showToast(msg, 'error');
+        } finally {
+            if (btn) {
+                btn.disabled = false;
+                btn.innerText = originalText;
+            }
+        }
     }
 
     // --- Modal Logic ---
@@ -258,6 +440,7 @@
         
         document.getElementById('editName').value = currentData.name;
         document.getElementById('editPhone').value = currentData.phone;
+        document.getElementById('editBirthDate').value = currentData.birth_date;
         document.getElementById('editGender').value = currentData.gender;
         document.getElementById('editEducation').value = currentData.education;
         document.getElementById('editOccupation').value = currentData.occupation;
@@ -318,6 +501,7 @@
         formData.append('_method', 'PUT'); // Spofing method for multipart data
         formData.append('name', document.getElementById('editName').value);
         formData.append('phone', document.getElementById('editPhone').value);
+        formData.append('birth_date', document.getElementById('editBirthDate').value);
         formData.append('gender', document.getElementById('editGender').value);
         formData.append('education', document.getElementById('editEducation').value);
         formData.append('occupation', document.getElementById('editOccupation').value);

@@ -16,7 +16,10 @@ class Member extends Authenticatable
         'nik',
         'password',
         'name',
+        'role',
+        'status_pengurus',
         'phone',
+        'birth_date',
         'gender',
         'education',
         'occupation',
@@ -25,6 +28,15 @@ class Member extends Authenticatable
         'city_id',
         'district_id',
         'photo_path',
+        'is_interested_pengurus',
+        'has_org_experience',
+        'org_count',
+        'org_name',
+        'org_position',
+        'org_duration_months',
+        'org_description',
+        'pengurus_reason',
+        'org_certificate_path',
     ];
 
     protected $appends = ['photo_url'];

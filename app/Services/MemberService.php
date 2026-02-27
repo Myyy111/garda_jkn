@@ -122,6 +122,60 @@ class MemberService
         });
     }
 
+    public function forceDeleteMember(int $id): bool
+    {
+        return DB::transaction(function () use ($id) {
+            $member = \App\Models\Member::onlyTrashed()->findOrFail($id);
+            
+            // Delete photo if exists
+            if ($member->photo_path) {
+                Storage::disk('public')->delete($member->photo_path);
+            }
+
+            $this->auditService->log(
+                'force_delete_member',
+                'member',
+                $member->id,
+                ['name' => $member->name, 'nik' => $member->nik, 'deleted_forever_at' => now()]
+            );
+
+            return $member->forceDelete();
+        });
+    }
+
+    public function verifyPengurus(int $id, string $status, ?string $adminNote = null): Member
+    {
+        return DB::transaction(function () use ($id, $status, $adminNote) {
+            $member = $this->memberRepo->findById($id);
+            
+            if ($status === 'setujui') {
+                $member->role = 'pengurus';
+                $member->status_pengurus = 'aktif';
+            } else {
+                $member->role = 'anggota';
+                $member->status_pengurus = 'ditolak';
+            }
+            
+            $member->save();
+
+            $this->auditService->log(
+                'verify_pengurus',
+                'member',
+                $member->id,
+                [
+                    'name' => $member->name,
+                    'nik' => $member->nik,
+                    'status' => $status,
+                    'note' => $adminNote,
+                    'new_role' => $member->role,
+                    'new_status' => $member->status_pengurus
+                ]
+            );
+
+            return $member;
+        });
+    }
+
     protected function getChanges(array $original, array $dirty): array
     {
         $changes = [];

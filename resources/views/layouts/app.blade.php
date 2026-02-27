@@ -40,11 +40,17 @@
             --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
             --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
             
-            --radius-md: 8px;
-            --radius-lg: 12px;
+            --radius-md: 24px;        /* Increased for modern rounded look */
+            --radius-lg: 32px;
+            --radius-pill: 9999px;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* Essential Reset */
+        * { 
+            margin: 0; padding: 0; box-sizing: border-box; 
+            outline: none !important; 
+            -webkit-tap-highlight-color: transparent;
+        }
         body { 
             font-family: 'Inter', system-ui, -apple-system, sans-serif; 
             background: var(--bg-base); 
@@ -83,14 +89,50 @@
         }
 
         .form-input { 
-            width: 100%; padding: 10px 14px; 
-            border: 1px solid var(--border); border-radius: var(--radius-md); 
-            font-size: 0.875rem; transition: all 0.2s;
+            width: 100%; padding: 10px 16px; 
+            border: 1.5px solid var(--border); 
+            border-radius: 8px; 
+            font-size: 0.95rem; 
+            transition: all 0.25s ease;
             background: #ffffff;
+            display: block;
+            appearance: none;
         }
         .form-input:focus { 
-            outline: none; border-color: var(--primary); 
-            box-shadow: 0 0 0 3px rgba(0, 74, 173, 0.1); 
+            border-color: var(--primary) !important;
+            /* Box shadow follows the border radius */
+            box-shadow: 0 0 0 4px rgba(0, 74, 173, 0.15) !important;
+            background: white;
+        }
+
+        /* Modern button styling to match rounded inputs */
+        .btn {
+            border-radius: var(--radius-md) !important;
+        }
+        
+        /* Fix for password container focus state */
+        .input-group-password {
+            position: relative;
+            width: 100%;
+        }
+        
+        .input-group-password .form-input {
+            padding-right: 40px !important;
+        }
+        
+        .password-toggle-btn {
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 10;
         }
 
 
@@ -352,6 +394,38 @@
         function formatNumber(num) {
             return new Intl.NumberFormat('id-ID').format(num);
         }
+
+        // 7. Utils: Toggle Password Visibility
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const iconWrap = document.getElementById('icon-' + inputId);
+            if (!input || !iconWrap) return;
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                iconWrap.innerHTML = '<i data-lucide="eye-off" style="width: 18px; height: 18px; color: #64748b;"></i>';
+            } else {
+                input.type = 'password';
+                iconWrap.innerHTML = '<i data-lucide="eye" style="width: 18px; height: 18px; color: #64748b;"></i>';
+            }
+            lucide.createIcons();
+        }
+
+        // Initialize Lucide Icons
+        (function() {
+            function initIcons() {
+                if (typeof lucide !== 'undefined') {
+                    lucide.createIcons();
+                } else {
+                    setTimeout(initIcons, 50);
+                }
+            }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initIcons);
+            } else {
+                initIcons();
+            }
+        })();
     </script>
     @stack('scripts')
 </body>

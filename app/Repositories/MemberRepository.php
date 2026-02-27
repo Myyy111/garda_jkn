@@ -68,4 +68,12 @@ class MemberRepository extends BaseRepository
     {
         return $this->model->distinct('province_id')->count('province_id');
     }
+
+    public function getPendingPengurus()
+    {
+        return $this->model->where('is_interested_pengurus', true)
+            ->where('status_pengurus', 'pendaftaran_diterima')
+            ->where('role', 'anggota')
+            ->get();
+    }
 }

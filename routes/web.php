@@ -13,10 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Halaman Login (Public)
+// Halaman Login (Public - Member & Pengurus)
 Route::get('/login', function () {
     return view('auth.login');
 })->name('login');
+
+// Halaman Login Admin (Private)
+Route::get('/login/admin', function () {
+    return view('auth.admin_login');
+})->name('admin.login');
 
 Route::get('/register', function () {
     return view('auth.register');
@@ -26,6 +31,11 @@ Route::get('/register', function () {
 Route::get('/', function () {
     return redirect()->route('login');
 });
+
+// Settings (Common for All Roles)
+Route::get('/settings', function () {
+    return view('common.settings');
+})->name('settings');
 
 // Halaman Admin (Protected by JS Check)
 Route::prefix('admin')->group(function () {
@@ -44,6 +54,13 @@ Route::prefix('admin')->group(function () {
     Route::get('/informations', function () {
         return view('admin.informations.index');
     });
+
+    // Approval Pengurus Section
+    Route::prefix('approvals/pengurus')->name('admin.approvals.pengurus.')->controller(\App\Http\Controllers\Web\AdminApprovalController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/{id}/approve', 'approve')->name('approve');
+        Route::post('/{id}/reject', 'reject')->name('reject');
+    });
 });
 
 // Halaman Member (Protected by JS Check)
@@ -54,6 +71,21 @@ Route::prefix('member')->group(function () {
 
     Route::get('/informations', function () {
         return view('member.informations.index');
+    });
+});
+
+// Halaman Pengurus (Protected by JS Check)
+Route::prefix('pengurus')->group(function () {
+    Route::get('/dashboard', function () {
+        return view('pengurus.dashboard');
+    });
+
+    Route::get('/members', function () {
+        return view('pengurus.members');
+    });
+
+    Route::get('/informations', function () {
+        return view('pengurus.informations');
     });
 });
 

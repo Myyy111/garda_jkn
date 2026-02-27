@@ -24,18 +24,18 @@
 
     /* Professional Table Styles */
     .table-card { border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; background: white; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-    .table-header { padding: 24px 32px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; }
+    .table-header { padding: 16px 24px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; }
     .table-header h2 { font-size: 1rem; font-weight: 700; color: #1e293b; }
     
     .data-table { width: 100%; border-collapse: collapse; }
-    .data-table th { background: #f8fafc; padding: 12px 32px; text-align: left; font-size: 0.65rem; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #e2e8f0; }
-    .data-table td { padding: 16px 32px; font-size: 0.875rem; color: #334155; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+    .data-table th { background: #f8fafc; padding: 10px 16px; text-align: left; font-size: 0.65rem; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 1px solid #e2e8f0; }
+    .data-table td { padding: 12px 16px; font-size: 0.875rem; color: #334155; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
     .data-table tr:hover { background: #f8fafc; }
 
     .badge { padding: 4px 8px; border-radius: 4px; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; }
     .badge-blue { background: #eff6ff; color: #1e40af; border: 1px solid #dbeafe; }
     
-    .pagination { padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; background: white; border-top: 1px solid #f1f5f9; }
+    .pagination { padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; background: white; border-top: 1px solid #f1f5f9; }
     .btn-action { width: 28px; height: 28px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; border: 1px solid #e2e8f0; cursor: pointer; transition: 0.15s; background: white; color: #64748b; }
     .btn-action:hover { background: #f1f5f9; border-color: #cbd5e1; color: #1e293b; }
 </style>
@@ -48,9 +48,12 @@
         <nav class="sb-menu">
             <a href="/admin/dashboard" class="sb-link"><i data-lucide="layout-dashboard" style="width: 16px; height: 16px;"></i> Dashboard</a>
             <a href="/admin/members" class="sb-link active"><i data-lucide="users" style="width: 16px; height: 16px;"></i> Manajemen Anggota</a>
+            <a href="{{ route('admin.approvals.pengurus.index') }}" class="sb-link"><i data-lucide="user-check" style="width: 16px; height: 16px;"></i> Persetujuan Pengurus</a>
             <a href="/admin/informations" class="sb-link"><i data-lucide="megaphone" style="width: 16px; height: 16px;"></i> Informasi</a>
             <a href="/admin/audit-logs" class="sb-link"><i data-lucide="file-clock" style="width: 16px; height: 16px;"></i> Log Audit</a>
-            <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05);">
+            <div style="margin-top: auto; padding-top: 20px;">
+                <div style="height: 1px; background: rgba(255,255,255,0.1); margin-bottom: 20px;"></div>
+                <a href="/settings" class="sb-link"><i data-lucide="settings" style="width: 16px; height: 16px;"></i> Pengaturan Akun</a>
                 <a href="#" class="sb-link" onclick="logout()"><i data-lucide="log-out" style="width: 16px; height: 16px;"></i> Logout</a>
             </div>
         </nav>
@@ -154,6 +157,7 @@
             if (isTrash) {
                 actionButtons = `
                     <button class="btn-action" title="Pulihkan Data" onclick="restoreMember(${m.id})" style="color: #16a34a; border-color: #dcfce7;"><i data-lucide="rotate-ccw" style="width: 14px; height: 14px;"></i></button>
+                    <button class="btn-action" title="Hapus Permanen" onclick="permanentlyDeleteMember(${m.id})" style="color: #ef4444; border-color: #fee2e2;"><i data-lucide="x-circle" style="width: 14px; height: 14px;"></i></button>
                 `;
             } else {
                 actionButtons = `
@@ -214,6 +218,20 @@
         } catch(e) { showToast('Gagal memulihkan data.', 'error'); }
     }
 
+    async function permanentlyDeleteMember(id) {
+        const confirm = await showConfirm(
+            'Hapus Permanen?', 
+            'Data ini akan dihapus secara permanen dari server dan TIDAK DAPAT dipulihkan kembali. Lanjutkan?',
+            { type: 'danger', confirmText: 'Ya, Hapus Permanen', icon: 'x-circle' }
+        );
+        if(!confirm) return;
+        try {
+            await axios.delete(`/admin/members/${id}/permanently-delete`);
+            fetchData();
+            showToast('Data berhasil dihapus permanen', 'success');
+        } catch(e) { showToast('Gagal menghapus data secara permanen.', 'error'); }
+    }
+
     async function openEdit(id) {
         editingId = id;
         const res = await axios.get(`/admin/members/${id}`);
@@ -222,6 +240,7 @@
         document.getElementById('editNik').value = m.nik;
         document.getElementById('editName').value = m.name;
         document.getElementById('editPhone').value = m.phone;
+        document.getElementById('editBirthDate').value = m.birth_date || '';
         document.getElementById('editGender').value = m.gender;
         document.getElementById('editEducation').value = m.education;
         document.getElementById('editOccupation').value = m.occupation;
@@ -286,6 +305,7 @@
         const payload = {
             name: document.getElementById('editName').value,
             phone: document.getElementById('editPhone').value,
+            birth_date: document.getElementById('editBirthDate').value,
             gender: document.getElementById('editGender').value,
             education: document.getElementById('editEducation').value,
             occupation: document.getElementById('editOccupation').value,
@@ -355,6 +375,7 @@
             nik: document.getElementById('addNik').value,
             name: document.getElementById('addName').value,
             phone: document.getElementById('addPhone').value,
+            birth_date: document.getElementById('addBirthDate').value,
             password: document.getElementById('addPassword').value,
             gender: document.getElementById('addGender').value,
             education: document.getElementById('addEducation').value,

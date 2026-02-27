@@ -20,6 +20,7 @@ class RegisterRequest extends FormRequest
             'nik' => 'required|numeric|digits:16|unique:members,nik',
             'name' => 'required|string|max:255',
             'phone' => ['required', 'string', 'regex:/^(\+62|08)[0-9]{8,15}$/'],
+            'birth_date' => 'required|date',
             'gender' => 'required|in:L,P',
             'education' => 'required|in:SD,SMP,SMA,Diploma,S1/D4,S2',
             'occupation' => 'required|in:Petani,Pedagang,Nelayan,Wiraswasta,Karyawan,PNS,TNI/POLRI,Lainnya',

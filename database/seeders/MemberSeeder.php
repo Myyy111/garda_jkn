@@ -33,6 +33,7 @@ class MemberSeeder extends Seeder
                     'name' => $m['name'],
                     'password' => 'GardaJKN2026!',
                     'phone' => '0812' . rand(10000000, 99999999),
+                    'birth_date' => '1990-01-01',
                     'gender' => rand(0, 1) ? 'L' : 'P',
                     'education' => 'S1/D4',
                     'occupation' => 'Karyawan',

@@ -7,6 +7,7 @@ class MemberDTO
     public function __construct(
         public readonly ?string $name = null,
         public readonly ?string $phone = null,
+        public readonly ?string $birth_date = null,
         public readonly ?string $gender = null,
         public readonly ?string $education = null,
         public readonly ?string $occupation = null,
@@ -17,6 +18,17 @@ class MemberDTO
         public readonly ?string $nik = null,
         public readonly ?string $password = null,
         public readonly mixed $photo = null,
+        public readonly ?string $role = null,
+        public readonly ?string $status_pengurus = null,
+        public readonly ?bool $is_interested_pengurus = null,
+        public readonly ?bool $has_org_experience = null,
+        public readonly ?int $org_count = null,
+        public readonly ?string $org_name = null,
+        public readonly ?string $org_position = null,
+        public readonly ?int $org_duration_months = null,
+        public readonly ?string $org_description = null,
+        public readonly ?string $pengurus_reason = null,
+        public readonly ?string $org_certificate_path = null,
     ) {}
 
     public static function fromRequest(array $data): self
@@ -24,6 +36,7 @@ class MemberDTO
         return new self(
             name: $data['name'] ?? null,
             phone: $data['phone'] ?? null,
+            birth_date: $data['birth_date'] ?? null,
             gender: $data['gender'] ?? null,
             education: $data['education'] ?? null,
             occupation: $data['occupation'] ?? null,
@@ -34,6 +47,17 @@ class MemberDTO
             nik: $data['nik'] ?? null,
             password: $data['password'] ?? null,
             photo: $data['photo'] ?? null,
+            role: $data['role'] ?? null,
+            status_pengurus: $data['status_pengurus'] ?? null,
+            is_interested_pengurus: isset($data['is_interested_pengurus']) ? (bool)$data['is_interested_pengurus'] : null,
+            has_org_experience: isset($data['has_org_experience']) ? (bool)$data['has_org_experience'] : null,
+            org_count: isset($data['org_count']) ? (int)$data['org_count'] : null,
+            org_name: $data['org_name'] ?? null,
+            org_position: $data['org_position'] ?? null,
+            org_duration_months: isset($data['org_duration_months']) ? (int)$data['org_duration_months'] : null,
+            org_description: $data['org_description'] ?? null,
+            pengurus_reason: $data['pengurus_reason'] ?? null,
+            org_certificate_path: $data['org_certificate_path'] ?? null,
         );
     }
 
@@ -48,6 +72,7 @@ class MemberDTO
             'nik' => $nik,
             'name' => $this->name,
             'phone' => $this->phone,
+            'birth_date' => $this->birth_date,
             'gender' => $this->gender,
             'education' => $this->education,
             'occupation' => $this->occupation,
@@ -56,6 +81,17 @@ class MemberDTO
             'district_id' => $this->district_id,
             'address_detail' => $this->address_detail,
             'password' => $this->password,
+            'role' => $this->role,
+            'status_pengurus' => $this->status_pengurus,
+            'is_interested_pengurus' => $this->is_interested_pengurus,
+            'has_org_experience' => $this->has_org_experience,
+            'org_count' => $this->org_count,
+            'org_name' => $this->org_name,
+            'org_position' => $this->org_position,
+            'org_duration_months' => $this->org_duration_months,
+            'org_description' => $this->org_description,
+            'pengurus_reason' => $this->pengurus_reason,
+            'org_certificate_path' => $this->org_certificate_path,
         ], fn($val) => $val !== null);
     }
 }

@@ -9,34 +9,45 @@
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-bottom:20px;">
                 <div>
                     <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">NIK (16 Digit)</label>
-                    <input type="text" id="addNik" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 0.875rem;" placeholder="Wajib 16 digit sesuai KTP">
+                    <input type="text" id="addNik" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-md); border: 1px solid #e2e8f0; font-size: 0.875rem;" placeholder="Wajib 16 digit sesuai KTP">
                 </div>
                 <div>
                     <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">Nama Lengkap</label>
-                    <input type="text" id="addName" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 0.875rem;">
+                    <input type="text" id="addName" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-md); border: 1px solid #e2e8f0; font-size: 0.875rem;">
                 </div>
             </div>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-bottom:20px;">
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:20px; margin-bottom:20px;">
                 <div>
-                    <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">sApp</label>
-                    <input type="text" id="addPhone" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 0.875rem;" placeholder="0812...">
+                    <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">WhatsApp</label>
+                    <input type="text" id="addPhone" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-md); border: 1px solid #e2e8f0; font-size: 0.875rem;" placeholder="0812...">
+                </div>
+                <div>
+                    <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">Tanggal Lahir</label>
+                    <input type="date" id="addBirthDate" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-md); border: 1px solid #e2e8f0; font-size: 0.875rem;">
                 </div>
                 <div>
                     <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">Kata Sandi</label>
-                    <input type="password" id="addPassword" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 0.875rem;" placeholder="Min. 6 Karakter">
+                    <div class="input-group-password">
+                        <input type="password" id="addPassword" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-md); border: 1px solid #e2e8f0; font-size: 0.875rem;" placeholder="Min. 6 Karakter">
+                        <button type="button" class="password-toggle-btn" onclick="togglePassword('addPassword')" tabindex="-1">
+                            <span id="icon-addPassword" style="display: flex;">
+                                <i data-lucide="eye" style="width: 18px; height: 18px; color: #64748b;"></i>
+                            </span>
+                        </button>
+                    </div>
                 </div>
             </div>
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-bottom:20px;">
                 <div>
                     <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">Jenis Kelamin</label>
-                    <select id="addGender" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 0.875rem;">
+                    <select id="addGender" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-md); border: 1px solid #e2e8f0; font-size: 0.875rem;">
                         <option value="L">Laki-laki</option>
                         <option value="P">Perempuan</option>
                     </select>
                 </div>
                 <div>
                     <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">Pendidikan Terakhir</label>
-                    <select id="addEducation" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 0.875rem;">
+                    <select id="addEducation" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-md); border: 1px solid #e2e8f0; font-size: 0.875rem;">
                         <option value="SD">SD</option>
                         <option value="SMP">SMP</option>
                         <option value="SMA">SMA</option>
@@ -48,7 +59,7 @@
             </div>
             <div style="margin-bottom:20px;">
                 <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">Sektor Pekerjaan</label>
-                <select id="addOccupation" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 0.875rem;">
+                <select id="addOccupation" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-md); border: 1px solid #e2e8f0; font-size: 0.875rem;">
                     <option value="Petani">Petani</option>
                     <option value="Pedagang">Pedagang</option>
                     <option value="Nelayan">Nelayan</option>
@@ -62,31 +73,31 @@
             <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:16px; margin-bottom:20px;">
                 <div>
                     <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">Provinsi</label>
-                    <select id="addProvince" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 0.875rem;" onchange="loadAddCities(this.value)">
+                    <select id="addProvince" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-md); border: 1px solid #e2e8f0; font-size: 0.875rem;" onchange="loadAddCities(this.value)">
                         <option value="">Pilih...</option>
                     </select>
                 </div>
                 <div>
                     <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">Kab/Kota</label>
-                    <select id="addCity" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 0.875rem;" onchange="loadAddDistricts(this.value)">
+                    <select id="addCity" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-md); border: 1px solid #e2e8f0; font-size: 0.875rem;" onchange="loadAddDistricts(this.value)">
                         <option value="">Pilih...</option>
                     </select>
                 </div>
                 <div>
                     <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">Kecamatan</label>
-                    <select id="addDistrict" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 0.875rem;">
+                    <select id="addDistrict" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-md); border: 1px solid #e2e8f0; font-size: 0.875rem;">
                         <option value="">Pilih...</option>
                     </select>
                 </div>
             </div>
             <div>
                 <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">Alamat Lengkap</label>
-                <textarea id="addAddress" class="form-input" rows="2" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 0.875rem; resize: none;"></textarea>
+                <textarea id="addAddress" class="form-input" rows="2" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-md); border: 1px solid #e2e8f0; font-size: 0.875rem; resize: none;"></textarea>
             </div>
         </div>
         <div style="padding:20px 32px; background:#f8fafc; border-top:1px solid #e2e8f0; display:flex; justify-content:flex-end; gap:12px;">
-            <button class="btn btn-secondary" onclick="closeAddModal()" style="padding: 8px 16px; border-radius: 6px; border: 1px solid #e2e8f0; background: white; color: #64748b; font-weight: 500;">Batal</button>
-            <button class="btn btn-primary" onclick="submitAdd()" style="padding: 8px 16px; border-radius: 6px; border: none; background: #004aad; color: white; font-weight: 500;">Simpan Anggota</button>
+            <button class="btn btn-secondary" onclick="closeAddModal()" style="padding: 8px 16px; border-radius: var(--radius-md); border: 1px solid #e2e8f0; background: white; color: #64748b; font-weight: 500;">Batal</button>
+            <button class="btn btn-primary" onclick="submitAdd()" style="padding: 8px 16px; border-radius: var(--radius-md); border: none; background: #004aad; color: white; font-weight: 500;">Simpan Anggota</button>
         </div>
     </div>
 </div>
@@ -102,21 +113,25 @@
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-bottom:20px;">
                 <div>
                     <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">NIK (16 Digit)</label>
-                    <input type="text" id="editNik" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 0.875rem;" readonly title="NIK tidak dapat diubah">
+                    <input type="text" id="editNik" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-md); border: 1px solid #e2e8f0; font-size: 0.875rem;" readonly title="NIK tidak dapat diubah">
                 </div>
                 <div>
                     <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">Nama Lengkap</label>
-                    <input type="text" id="editName" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 0.875rem;">
+                    <input type="text" id="editName" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-md); border: 1px solid #e2e8f0; font-size: 0.875rem;">
                 </div>
             </div>
-            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-bottom:20px;">
+            <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:20px; margin-bottom:20px;">
                 <div>
                     <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">WhatsApp</label>
-                    <input type="text" id="editPhone" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 0.875rem;">
+                    <input type="text" id="editPhone" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-md); border: 1px solid #e2e8f0; font-size: 0.875rem;">
+                </div>
+                <div>
+                    <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">Tanggal Lahir</label>
+                    <input type="date" id="editBirthDate" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-md); border: 1px solid #e2e8f0; font-size: 0.875rem;">
                 </div>
                 <div>
                     <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">Jenis Kelamin</label>
-                    <select id="editGender" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 0.875rem;">
+                    <select id="editGender" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-md); border: 1px solid #e2e8f0; font-size: 0.875rem;">
                         <option value="L">Laki-laki</option>
                         <option value="P">Perempuan</option>
                     </select>
@@ -125,7 +140,7 @@
             <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px; margin-bottom:20px;">
                 <div>
                     <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">Pendidikan</label>
-                    <select id="editEducation" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 0.875rem;">
+                    <select id="editEducation" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-md); border: 1px solid #e2e8f0; font-size: 0.875rem;">
                         <option value="SD">SD</option>
                         <option value="SMP">SMP</option>
                         <option value="SMA">SMA</option>
@@ -136,7 +151,7 @@
                 </div>
                 <div>
                     <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">Pekerjaan</label>
-                    <select id="editOccupation" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 0.875rem;">
+                    <select id="editOccupation" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-md); border: 1px solid #e2e8f0; font-size: 0.875rem;">
                         <option value="Petani">Petani</option>
                         <option value="Pedagang">Pedagang</option>
                         <option value="Nelayan">Nelayan</option>
@@ -151,26 +166,26 @@
             <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:16px; margin-bottom:20px;">
                 <div>
                     <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">Provinsi</label>
-                    <select id="editProvince" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 0.875rem;" onchange="loadEditCities(this.value)">
+                    <select id="editProvince" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-md); border: 1px solid #e2e8f0; font-size: 0.875rem;" onchange="loadEditCities(this.value)">
                         <option value="">Pilih...</option>
                     </select>
                 </div>
                 <div>
                     <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">Kab/Kota</label>
-                    <select id="editCity" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 0.875rem;" onchange="loadEditDistricts(this.value)">
+                    <select id="editCity" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-md); border: 1px solid #e2e8f0; font-size: 0.875rem;" onchange="loadEditDistricts(this.value)">
                         <option value="">Pilih...</option>
                     </select>
                 </div>
                 <div>
                     <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">Kecamatan</label>
-                    <select id="editDistrict" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 0.875rem;">
+                    <select id="editDistrict" class="form-input" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-md); border: 1px solid #e2e8f0; font-size: 0.875rem;">
                         <option value="">Pilih...</option>
                     </select>
                 </div>
             </div>
             <div>
                 <label class="label" style="font-size: 0.75rem; font-weight: 600; color: #64748b; margin-bottom: 6px; display: block;">Alamat Lengkap</label>
-                <textarea id="editAddress" class="form-input" rows="2" style="width: 100%; padding: 8px 12px; border-radius: 6px; border: 1px solid #e2e8f0; font-size: 0.875rem; resize: none;"></textarea>
+                <textarea id="editAddress" class="form-input" rows="2" style="width: 100%; padding: 8px 12px; border-radius: var(--radius-md); border: 1px solid #e2e8f0; font-size: 0.875rem; resize: none;"></textarea>
             </div>
         </div>
         <div style="padding:20px 32px; background:#f8fafc; border-top:1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">

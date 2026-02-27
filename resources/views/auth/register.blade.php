@@ -115,8 +115,8 @@
                         <input type="text" id="phone" class="form-input" placeholder="0812..." required>
                     </div>
                     <div>
-                        <label class="label">Kata Sandi</label>
-                        <input type="password" id="password" class="form-input" placeholder="Min. 6 Karakter" required>
+                        <label class="label">Tanggal Lahir</label>
+                        <input type="date" id="birth_date" class="form-input" required>
                     </div>
                 </div>
 
@@ -141,18 +141,31 @@
                     </div>
                 </div>
 
-                <div style="margin-bottom: 20px;">
-                    <label class="label">Sektor Pekerjaan</label>
-                    <select id="occupation" class="form-input" required>
-                        <option value="Petani">Petani</option>
-                        <option value="Pedagang">Pedagang</option>
-                        <option value="Nelayan">Nelayan</option>
-                        <option value="Wiraswasta">Wiraswasta</option>
-                        <option value="Karyawan">Karyawan</option>
-                        <option value="PNS">PNS</option>
-                        <option value="TNI/POLRI">TNI / POLRI</option>
-                        <option value="Lainnya">Lainnya</option>
-                    </select>
+                <div class="input-grid">
+                    <div>
+                        <label class="label">Sektor Pekerjaan</label>
+                        <select id="occupation" class="form-input" required>
+                            <option value="Petani">Petani</option>
+                            <option value="Pedagang">Pedagang</option>
+                            <option value="Nelayan">Nelayan</option>
+                            <option value="Wiraswasta">Wiraswasta</option>
+                            <option value="Karyawan">Karyawan</option>
+                            <option value="PNS">PNS</option>
+                            <option value="TNI/POLRI">TNI / POLRI</option>
+                            <option value="Lainnya">Lainnya</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="label">Kata Sandi</label>
+                        <div class="input-group-password">
+                            <input type="password" id="password" class="form-input" placeholder="Min. 6 Karakter" required>
+                            <button type="button" class="password-toggle-btn" onclick="togglePassword('password')" tabindex="-1">
+                                <span id="icon-password" style="display: flex;">
+                                    <i data-lucide="eye" style="width: 18px; height: 18px; color: #64748b;"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
                 <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:16px; margin-bottom:20px;">
@@ -255,6 +268,7 @@
             nik: document.getElementById('nik').value,
             name: document.getElementById('name').value,
             phone: document.getElementById('phone').value,
+            birth_date: document.getElementById('birth_date').value,
             password: document.getElementById('password').value,
             gender: document.getElementById('gender').value,
             education: document.getElementById('education').value,

@@ -49,9 +49,12 @@
         <nav class="sb-menu">
             <a href="/admin/dashboard" class="sb-link active"><i data-lucide="layout-dashboard" style="width: 16px; height: 16px;"></i> Dashboard</a>
             <a href="/admin/members" class="sb-link"><i data-lucide="users" style="width: 16px; height: 16px;"></i> Manajemen Anggota</a>
+            <a href="{{ route('admin.approvals.pengurus.index') }}" class="sb-link"><i data-lucide="user-check" style="width: 16px; height: 16px;"></i> Persetujuan Pengurus</a>
             <a href="/admin/informations" class="sb-link"><i data-lucide="megaphone" style="width: 16px; height: 16px;"></i> Informasi</a>
             <a href="/admin/audit-logs" class="sb-link"><i data-lucide="file-clock" style="width: 16px; height: 16px;"></i> Log Audit</a>
-            <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05);">
+            <div style="margin-top: auto; padding-top: 20px;">
+                <div style="height: 1px; background: rgba(255,255,255,0.1); margin-bottom: 20px;"></div>
+                <a href="/settings" class="sb-link"><i data-lucide="settings" style="width: 16px; height: 16px;"></i> Pengaturan Akun</a>
                 <a href="#" class="sb-link" onclick="logout()"><i data-lucide="log-out" style="width: 16px; height: 16px;"></i> Logout</a>
             </div>
         </nav>
@@ -81,42 +84,42 @@
                 <div class="stat-card">
                     <div class="stat-label">Cakupan Wilayah</div>
                     <div class="stat-value" id="count-provinces">...</div>
-                    <div style="font-size: 0.7rem; color: #94a3b8; font-weight: 500; margin-top: 8px;">Provinsi Terdaftar</div>
+                    <div style="font-size: 0.75rem; color: #64748b; font-weight: 600; margin-top: 12px;">Provinsi Terdaftar</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-label">Aktivitas Sistem</div>
                     <div class="stat-value" id="count-logs">...</div>
-                    <div style="font-size: 0.7rem; color: #94a3b8; font-weight: 500; margin-top: 8px;">Log Transaksi Terintegrasi</div>
+                    <div style="font-size: 0.75rem; color: #94a3b8; font-weight: 600; margin-top: 12px;">Log Transaksi</div>
                 </div>
             </div>
 
             <div class="chart-box">
                 <div class="title-row">
                     <div>
-                        <h3 style="font-size: 0.9375rem; font-weight: 600; color: #1e293b;">Analitik Pertumbuhan Anggota</h3>
-                        <p style="font-size: 0.8125rem; color: #64748b; margin-top: 2px;">Laju pendaftaran berbasis periode waktu.</p>
+                        <h3 style="font-size: 1.125rem; font-weight: 800; color: #0f172a;">Analitik Pertumbuhan Anggota</h3>
+                        <p style="font-size: 0.85rem; color: #64748b; margin-top: 4px;">Laju pendaftaran berbasis periode waktu global.</p>
                     </div>
-                    <select id="rangeSelector" class="form-input" style="width: 160px; padding: 8px 12px; border-radius: 6px; font-size: 0.8125rem;" onchange="updateDashboard(this.value)">
+                    <select id="rangeSelector" class="form-input" style="width: 200px; padding: 10px 16px; border-radius: 12px; border: 1px solid #e2e8f0; font-size: 0.85rem; font-weight: 600;" onchange="updateDashboard(this.value)">
                         <option value="3">3 Bulan Terakhir</option>
                         <option value="6" selected>6 Bulan Terakhir</option>
                         <option value="12">1 Tahun Terakhir</option>
                     </select>
                 </div>
-                <div style="position: relative; width: 100%; height: 350px;"><canvas id="mainChart"></canvas></div>
+                <div style="position: relative; width: 100%; height: 400px;"><canvas id="mainChart"></canvas></div>
             </div>
 
             <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;">
                 <div class="chart-box" style="padding: 24px;">
-                    <div class="title-row" style="margin-bottom: 20px;"><h3 style="font-size: 0.9375rem; font-weight: 600; color: #1e293b;">Demografi Gender</h3></div>
-                    <div style="position: relative; width: 100%; height: 220px;"><canvas id="genderChart"></canvas></div>
+                    <div class="title-row" style="margin-bottom: 24px;"><h3 style="font-size: 1rem; font-weight: 800; color: #0f172a;">Demografi Gender</h3></div>
+                    <div style="position: relative; width: 100%; height: 250px;"><canvas id="genderChart"></canvas></div>
                 </div>
                 <div class="chart-box" style="padding: 24px;">
-                    <div class="title-row" style="margin-bottom: 20px;"><h3 style="font-size: 0.9375rem; font-weight: 600; color: #1e293b;">Latar Belakang Pendidikan</h3></div>
-                    <div style="position: relative; width: 100%; height: 220px;"><canvas id="educationChart"></canvas></div>
+                    <div class="title-row" style="margin-bottom: 24px;"><h3 style="font-size: 1rem; font-weight: 800; color: #0f172a;">Tingkat Pendidikan</h3></div>
+                    <div style="position: relative; width: 100%; height: 250px;"><canvas id="educationChart"></canvas></div>
                 </div>
                 <div class="chart-box" style="padding: 24px;">
-                    <div class="title-row" style="margin-bottom: 20px;"><h3 style="font-size: 0.9375rem; font-weight: 600; color: #1e293b;">Klasifikasi Pekerjaan</h3></div>
-                    <div style="position: relative; width: 100%; height: 220px;"><canvas id="occupationChart"></canvas></div>
+                    <div class="title-row" style="margin-bottom: 24px;"><h3 style="font-size: 1rem; font-weight: 800; color: #0f172a;">Sektor Pekerjaan</h3></div>
+                    <div style="position: relative; width: 100%; height: 250px;"><canvas id="occupationChart"></canvas></div>
                 </div>
             </div>
         </div>

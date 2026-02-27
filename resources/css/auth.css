@@ -1,0 +1,389 @@
+/* Auth (Login & Register) Styles */
+.split-layout {
+    display: flex;
+    height: 100vh;
+    background: #fdfdfd;
+    overflow: hidden;
+}
+
+/* Left Side: Brand/Visual */
+.brand-side {
+    flex: 1.2;
+    background: linear-gradient(145deg, #004aad 0%, #002d6a 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 40px 60px;
+    gap: 60px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+}
+
+/* Decorative elements */
+.brand-side::before {
+    content: '';
+    position: absolute;
+    top: -15%;
+    right: -15%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.brand-side::after {
+    content: '';
+    position: absolute;
+    bottom: -10%;
+    left: -10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.brand-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 10;
+}
+
+.brand-logo {
+    width: 48px;
+    height: 48px;
+    background: white;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #004aad;
+    font-weight: 800;
+    font-size: 1.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+}
+
+.brand-name {
+    font-size: 1.75rem;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    color: white;
+}
+
+.brand-content {
+    position: relative;
+    z-index: 10;
+    max-width: 520px;
+    margin: auto 0;
+}
+
+.brand-title {
+    font-size: 2.75rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    letter-spacing: -1.5px;
+}
+
+.brand-subtitle {
+    font-size: 1.25rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+.brand-footer {
+    z-index: 10;
+    display: flex;
+    gap: 48px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 24px;
+    margin-top: auto;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 800;
+    color: white;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* Right Side: Form */
+.form-side {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 40px 60px;
+    background: #ffffff;
+    box-shadow: -20px 0 50px rgba(0, 0, 0, 0.02);
+    overflow-y: auto;
+}
+
+.form-side::-webkit-scrollbar {
+    width: 6px;
+}
+
+.form-side::-webkit-scrollbar-track {
+    background: #f8fafc;
+}
+
+.form-side::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+.form-side::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+.form-container {
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+.form-container.register {
+    max-width: 680px;
+}
+
+.section-title {
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #004aad;
+    margin: 24px 0 12px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #eff6ff;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.input-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+@media (max-width: 640px) {
+    .input-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.toggle-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.brand-footer.features {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.feature-icon {
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.feature-icon i {
+    width: 16px;
+    height: 16px;
+}
+
+.welcome-text {
+    margin-bottom: 24px;
+}
+
+.welcome-text h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 8px;
+    letter-spacing: -1px;
+}
+
+.welcome-text p {
+    color: #64748b;
+    font-size: 1rem;
+}
+
+/* Role Toggle - Modern Gov Style */
+.role-toggle {
+    display: flex;
+    background: #f1f5f9;
+    padding: 6px;
+    border-radius: 14px;
+    margin-bottom: 32px;
+    position: relative;
+}
+
+.role-toggle button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    background: none;
+    font-size: 0.875rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+    color: #64748b;
+    z-index: 2;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.role-toggle button.active {
+    color: #004aad;
+    background: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.form-control {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid #f1f5f9;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: all 0.2s;
+    background: #f8fafc;
+}
+
+.form-control:focus {
+    border-color: #004aad;
+    background: white;
+    box-shadow: 0 0 0 4px rgba(0, 74, 173, 0.1);
+    outline: none;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 16px;
+    background: #004aad;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 15px -3px rgba(0, 74, 173, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.submit-btn:hover {
+    background: #003a8c;
+    transform: translateY(-2px);
+    box-shadow: 0 20px 25px -5px rgba(0, 74, 173, 0.4);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+.footer-links {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid #f1f5f9;
+    text-align: center;
+    font-size: 0.875rem;
+}
+
+.footer-links span {
+    color: #64748b;
+}
+
+.footer-links a {
+    color: #004aad;
+    font-weight: 700;
+    text-decoration: none;
+    margin-left: 6px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 1200px) {
+    .brand-side {
+        padding: 40px;
+    }
+
+    .brand-title {
+        font-size: 2.75rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    .brand-side {
+        display: none;
+    }
+
+    .form-side {
+        width: 100%;
+        padding: 40px;
+    }
+}

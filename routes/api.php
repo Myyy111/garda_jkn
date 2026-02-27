@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Admin\MemberController as AdminMemberController;
 use App\Http\Controllers\Api\Master\RegionController;
 use App\Http\Controllers\Api\Member\AuthController as MemberAuthController;
 use App\Http\Controllers\Api\Member\ProfileController;
+use App\Http\Controllers\Api\Common\SettingsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +20,13 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::prefix('settings')->controller(SettingsController::class)->group(function () {
+        Route::get('profile', 'getProfile');
+        Route::post('change-password', 'changePassword');
+    });
+});
 
 // --- Public Master Data ---
 Route::prefix('master')->controller(RegionController::class)->group(function () {
@@ -37,6 +45,7 @@ Route::prefix('member')->group(function () {
         Route::controller(ProfileController::class)->group(function () {
             Route::get('profile', 'show');
             Route::match(['put', 'post'], 'profile', 'update');
+            Route::post('apply-pengurus', 'applyPengurus');
         });
 
         Route::prefix('informations')->controller(\App\Http\Controllers\Api\Member\InformationController::class)->group(function () {
@@ -65,6 +74,8 @@ Route::prefix('admin')->group(function () {
             Route::delete('{id}', 'destroy');
             Route::post('{id}/reset-password', 'resetPassword');
             Route::post('{id}/restore', 'restore');
+            Route::delete('{id}/permanently-delete', 'permanentlyDelete');
+            Route::post('{id}/verify-pengurus', 'verifyPengurus');
         });
 
         Route::prefix('informations')->controller(\App\Http\Controllers\Api\Admin\InformationController::class)->group(function () {

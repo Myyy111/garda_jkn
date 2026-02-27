@@ -74,4 +74,26 @@ class MemberController extends Controller
         $this->memberService->restoreMember($id);
         return $this->successResponse('Member berhasil dipulihkan');
     }
+
+    public function permanentlyDelete(int $id): JsonResponse
+    {
+        $this->memberService->forceDeleteMember($id);
+        return $this->successResponse('Member berhasil dihapus secara permanen');
+    }
+
+    public function verifyPengurus(Request $request, int $id): JsonResponse
+    {
+        $request->validate([
+            'status' => 'required|in:setujui,tolak',
+            'note' => 'nullable|string'
+        ]);
+
+        $member = $this->memberService->verifyPengurus($id, $request->status, $request->note);
+        
+        $msg = $request->status === 'setujui' 
+            ? "Pendaftaran Pengurus untuk {$member->name} BERHASIL DISETUJUI." 
+            : "Pendaftaran Pengurus untuk {$member->name} TELAH DITOLAK.";
+
+        return $this->successResponse($msg, $member);
+    }
 }
