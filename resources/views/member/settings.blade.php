@@ -51,17 +51,26 @@
 
     <!-- Success Modal -->
     <div id="successModal" class="modal-overlay">
-        <div class="modal-content" style="max-width: 400px; text-align: center; padding: 40px; border-radius: 28px;">
-            <div style="width: 80px; height: 80px; background: #ecfdf5; color: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;">
-                <i data-lucide="check-circle" style="width: 48px; height: 48px;"></i>
+        <div class="modal-content" style="max-width: 400px; text-align: center; padding: 40px; border-radius: 20px;">
+            <div style="width: 80px; height: 80px; background: #f0fdf4; color: #166534; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px;">
+                <i data-lucide="check-circle" style="width: 40px; height: 40px;"></i>
             </div>
-            <h3 class="modal-title" style="font-size: 1.5rem; margin-bottom: 8px;">Berhasil!</h3>
-            <p class="text-muted" style="font-size: 0.95rem; margin-bottom: 24px;">Kata sandi Anda telah diperbarui.</p>
-            <button class="btn btn-primary w-full" onclick="closeSuccessModal()" style="padding: 14px;">Selesai</button>
+            <h3 style="font-size: 1.5rem; font-weight: 800; color: #1e293b; margin-bottom: 12px;">Update Berhasil!</h3>
+            <p style="color: #64748b; margin-bottom: 32px; line-height: 1.6;">Kata sandi akun Anda telah diperbarui. Silakan gunakan password baru untuk login selanjutnya.</p>
+            <button class="btn btn-primary w-full" onclick="document.getElementById('successModal').classList.remove('active')" style="padding: 14px; border-radius: 12px;">Tutup</button>
         </div>
     </div>
 
     @push('scripts')
-        @vite(['resources/js/pages/common_settings.js'])
+    @vite(['resources/js/pages/common_settings.js'])
+    <script>
+        function togglePassword(id) {
+            const input = document.getElementById(id);
+            const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+            input.setAttribute('type', type);
+            
+            // Re-render icons if needed (optional)
+        }
+    </script>
     @endpush
 </x-member-layout>
