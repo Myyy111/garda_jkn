@@ -32,10 +32,21 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-// Settings (Common for All Roles)
+// Settings (Separated per role for 100% consistency)
+Route::get('/admin/settings', function () { return view('admin.settings'); })->name('admin.settings');
+Route::get('/pengurus/settings', function () { return view('pengurus.settings'); })->name('pengurus.settings');
+Route::get('/member/settings', function () { return view('member.settings'); })->name('member.settings');
+
+// Legacy redirect if needed (optional, we can also remove it)
 Route::get('/settings', function () {
-    return view('common.settings');
-})->name('settings');
+    return "<script>
+        const role = localStorage.getItem('user_role');
+        if(role === 'admin') window.location.href='/admin/settings';
+        else if(role === 'pengurus') window.location.href='/pengurus/settings';
+        else if(role === 'member') window.location.href='/member/settings';
+        else window.location.href='/login';
+    </script>";
+});
 
 // Halaman Admin (Protected by JS Check)
 Route::prefix('admin')->group(function () {
@@ -49,6 +60,10 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/audit-logs', function () {
         return view('admin.audit_logs.index'); // New Web Route
+    });
+
+    Route::get('/bpjs-keliling', function () {
+        return view('admin.bpjs_keliling.index');
     });
 
     Route::get('/informations', function () {

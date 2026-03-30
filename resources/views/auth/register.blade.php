@@ -3,43 +3,7 @@
 @section('title', 'Daftar Anggota Baru - Garda JKN')
 
 @section('content')
-<style>
-    .page-wrapper { min-height: 100vh; background: #f1f5f9; padding: 60px 20px; display: flex; align-items: center; justify-content: center; }
-    .auth-card { background: white; width: 100%; max-width: 640px; border-radius: 20px; border: none; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.1); overflow: hidden; }
-    
-    .auth-header { 
-        padding: 40px; 
-        background: linear-gradient(135deg, #004aad 0%, #002d6a 100%); 
-        color: white; 
-        text-align: center;
-        position: relative;
-    }
-    .auth-header::after {
-        content: '';
-        position: absolute;
-        bottom: 0; left: 0; right: 0;
-        height: 40px;
-        background: white;
-        clip-path: ellipse(50% 100% at 50% 100%);
-    }
-    
-    .auth-header h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.025em; }
-    .auth-header p { opacity: 0.8; font-size: 0.95rem; font-weight: 500; }
-    
-    .auth-body { padding: 40px; }
-    
-    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
-    .form-group { margin-bottom: 20px; }
-    .label { display: block; font-size: 0.75rem; font-weight: 700; color: #475569; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
 
-    @media (max-width: 640px) {
-        .page-wrapper { padding: 0; background: white; }
-        .auth-card { border-radius: 0; box-shadow: none; }
-        .auth-body { padding: 32px 24px; }
-        .form-grid { grid-template-columns: 1fr; }
-        .auth-header { padding: 40px 24px; }
-    }
-</style>
 
 <div class="page-wrapper">
     <div class="auth-card">
@@ -166,84 +130,14 @@
 @endsection
 
 @push('scripts')
+@vite(['resources/css/pages/auth_register.css', 'resources/js/pages/auth_register.js'])
+
+
+@endpush
+
+@push("scripts")
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        loadProvinces();
-    });
-
-    async function loadProvinces() {
-        try {
-            const res = await axios.get('master/provinces');
-            const sel = document.getElementById('province');
-            sel.innerHTML = '<option value="">Pilih...</option>';
-            res.data.data.forEach(p => { 
-                sel.innerHTML += `<option value="${p.id}">${p.name}</option>`; 
-            });
-        } catch (e) {
-            console.error('Gagal mengambil data provinsi', e);
-        }
-    }
-
-    async function loadCities(provId) {
-        const sel = document.getElementById('city');
-        const distSel = document.getElementById('district');
-        sel.innerHTML = '<option value="">Pilih...</option>';
-        distSel.innerHTML = '<option value="">Pilih...</option>';
-        if(!provId) return;
-        try {
-            const res = await axios.get(`master/cities?province_id=${provId}`);
-            res.data.data.forEach(c => { 
-                sel.innerHTML += `<option value="${c.id}">${c.type === 'KOTA' ? 'KOTA ' : 'KAB. '}${c.name}</option>`; 
-            });
-        } catch (e) {
-            console.error('Gagal mengambil data kota', e);
-        }
-    }
-
-    async function loadDistricts(cityId) {
-        const sel = document.getElementById('district');
-        sel.innerHTML = '<option value="">Pilih...</option>';
-        if(!cityId) return;
-        try {
-            const res = await axios.get(`master/districts?city_id=${cityId}`);
-            res.data.data.forEach(d => { 
-                sel.innerHTML += `<option value="${d.id}">${d.name}</option>`; 
-            });
-        } catch (e) {
-            console.error('Gagal mengambil data kecamatan', e);
-        }
-    }
-
-    document.getElementById('registerForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const payload = {
-            nik: document.getElementById('nik').value,
-            jkn_number: document.getElementById('jkn_number').value,
-            name: document.getElementById('name').value,
-            phone: document.getElementById('phone').value,
-            birth_date: document.getElementById('birth_date').value,
-            password: document.getElementById('password').value,
-            gender: document.getElementById('gender').value,
-            education: document.getElementById('education').value,
-            occupation: document.getElementById('occupation').value,
-            province_id: document.getElementById('province').value,
-            city_id: document.getElementById('city').value,
-            district_id: document.getElementById('district').value,
-            address_detail: document.getElementById('address').value,
-        };
-
-        try {
-            const res = await axios.post('member/register', payload);
-            if(res.data.success) {
-                showToast('Pendaftaran berhasil! Silakan login.', 'success');
-                setTimeout(() => {
-                    window.location.href = '/login';
-                }, 2000);
-            }
-        } catch (error) {
-            showToast(error.response?.data?.message || 'Gagal mendaftar. Silakan periksa kembali data Anda.', 'error');
-        }
-    });
+    window.sessionSuccess = "{{ session("success") }}";
+    window.sessionError = "{{ session("error") }}";
 </script>
 @endpush

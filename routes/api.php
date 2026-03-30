@@ -86,6 +86,14 @@ Route::prefix('admin')->group(function () {
             Route::delete('{id}', 'destroy');
             Route::patch('{id}/toggle-status', 'toggleStatus');
         });
+
+        Route::prefix('bpjs-keliling')->controller(\App\Http\Controllers\Api\Admin\BpjsKelilingController::class)->group(function () {
+            Route::get('/', 'index');
+            Route::post('/', 'store');
+            Route::get('{id}', 'show');
+            Route::put('{id}', 'update');
+            Route::delete('{id}', 'destroy');
+        });
     });
 });
 

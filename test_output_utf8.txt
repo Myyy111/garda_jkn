@@ -1,0 +1,13 @@
+﻿LOGIN:
+Array
+(
+    [success] => 1
+    [message] => Login Admin Berhasil
+    [data] => Array
+        (
+            [token] => 21|l4XJrzeIPZjlRbgG6I89MaRFNGgB3nBIjHrUGnnj0b96bd63
+            [role] => administrator
+        )
+
+    [errors] => 
+)
